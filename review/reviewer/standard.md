@@ -1,112 +1,56 @@
-# The Standard of Code Review
+# Стандарты код ревью
 
 
 
-The primary purpose of code review is to make sure that the overall
-code health of Google's code
-base is improving over time. All of the tools and processes of code review are
-designed to this end.
+Главная цель проведения ревью - улучшение состояния кодовой базы компании Гугл. Все инструменты и средства, используемые для проведения ревью, направлены именно на достижение этой цели.
 
-In order to accomplish this, a series of trade-offs have to be balanced.
+На пути к достижению озвученной цели приходится идти на ряд компромиссов.
 
-First, developers must be able to _make progress_ on their tasks. If you never
-submit an improvement to the codebase, then the codebase never improves. Also,
-if a reviewer makes it very difficult for _any_ change to go in, then developers
-are disincentivized to make improvements in the future.
+Во-первых, разработчики должны иметь возможность делать свои задачи. Если вы не принимаете никаких изменений в кодовую базу, то она никогда и не улучшится. В случае, когда ревьюер, делает любые изменения слишком сложными, разработчики просто не заходят ничего делать в будущем.
 
-On the other hand, it is the duty of the reviewer to make sure that each CL is
-of such a quality that the overall code health of their codebase is not
-decreasing as time goes on. This can be tricky, because often, codebases degrade
-through small decreases in code health over time, especially when a team is
-under significant time constraints and they feel that they have to take
-shortcuts in order to accomplish their goals.
+С другой стороны, именно ревьюер несет ответственность за качество изменений в CL  и следит за тем, чтобы состояние кодовой базы со временем не деградировало. Это непростая задача, поскольку часто код проекта ухудшается посредством мелких изменений на протяжении некоторого периода времени. Это ощущается особенно остро, когда на команду давят сроки и качество в мелочах приносится в жертву.
 
-Also, a reviewer has ownership and responsibility over the code they are
-reviewing. They want to ensure that the codebase stays consistent, maintainable,
-and all of the other things mentioned in
-["What to look for in a code review."](looking-for.md)
+Ревьюер несет ответственность за тот код, который он ревьюит. Он должен быть уверен, что кодовая база остается консистентной, поддерживаемой, и отвечает все другим принципам из ["За чем необходимо следить в ревью"](looking-for.md).
 
-Thus, we get the following rule as the standard we expect in code reviews:
+Таким образом, мы приходим к следующему правилу, задающему стандарт проведения ревью:
 
-**In general, reviewers should favor approving a CL once it is in a state where
-it definitely improves the overall
-code health of the system
-being worked on, even if the CL isn't perfect.**
+**Ревьюер должен принять CL тогда, когда он улучшает общую кодовую базу проекта, даже если CL не идеален.**
 
-That is _the_ senior principle among all of the code review guidelines.
+Это _самый_ главный принцип проведения ревью.
 
-There are limitations to this, of course. For example, if a CL adds a feature
-that the reviewer doesn't want in their system, then the reviewer can certainly
-deny approval even if the code is well-designed.
+Конечно, есть некоторые оговорки: если CL добавляет в код фичи, которые ревьюер не не хочет видеть в проекте и не считает необходимыми, то он может не принимать изменения, даже если они улучшают кодовую базу.
 
-A key point here is that there is no such thing as "perfect" code&mdash;there is
-only _better_ code. Reviewers should not require the author to polish every tiny
-piece of a CL before granting approval. Rather, the reviewer should balance out
-the need to make forward progress compared to the importance of the changes they
-are suggesting. Instead of seeking perfection, what a reviewer should seek is
-_continuous improvement_. A CL that, as a whole, improves the maintainability,
-readability, and understandability of the system shouldn't be delayed for days
-or weeks because it isn't "perfect."
+Ключевым аспектом здесь является осознание того, что идеального кода не бывает: бывает код, который может быть лучше. Ревьюер не должен требовать совершенства в каждом отдельном небольшом кусочке CL перед тем, как принять изменения, он должен уметь находить баланс между улучшениями в CL как в коде, и важностью тех изменений, которые этот код несет. Вместо того, чтобы требовать совершенства, ревьюер должен стремиться к последовательному улучшению. CL, который улучшает поддерживаемость, читаемость и понятность кода не должен задерживаться в ревью на несколько дней или недель, по той причине, что он не идеален.
 
-Reviewers should _always_ feel free to leave comments expressing that something
-could be better, but if it's not very important, prefix it with something like
-"Nit: " to let the author know that it's just a point of polish that they could
-choose to ignore.
+При этом ревьюер может свободно оставлять комментарии, поясняющие те моменты, которые могут быть сделаны лучше, однако, не имеют решающего значения. Помечайте такие комментарии определенным префиксом, например, "Nit: " , чтобы автор знал что эта деталь не обязательна к выполнению и ее реализация остается на его усмотрение.
 
-Note: Nothing in this document justifies checking in CLs that definitely
-_worsen_ the overall code health of the system. The only time you would do that
-would be in an [emergency](../emergencies.md).
+Замечание: данный документ не оправдывает изменений в CL, которые ухудшают состояние кодовой базы проекта. Единственным исключением являются [экстренные случаи](../emergencies.md).
 
-## Mentoring
+## Менторство
 
-Code review can have an important function of teaching developers something new
-about a language, a framework, or general software design principles. It's
-always fine to leave comments that help a developer learn something new. Sharing
-knowledge is part of improving the code health of a system over time. Just keep
-in mind that if your comment is purely educational, but not critical to meeting
-the standards described in this document, prefix it with "Nit: " or otherwise
-indicate that it's not mandatory for the author to resolve it in this CL.
+Код ревью может также нести образовательный смысл, обучая разработчикам новым знаниям о языке, фреймворке или общих принципах написания кода. Всегда хорошо, если вы оставляете комментарий, который учит разработчиков чему-то новому. Кроме того, общие знания позволяют улучшать кодовую базу. Помните о том, что если ваш комментарий несет только образовательный смысл и не содержит критичных требований (по описанным в данном документе стандартам), помечайте его "Nit: " или прямо пишите в комментарии что он не обязателен к выполнению.
 
-## Principles {#principles}
+## Принципы {#principles}
 
-*   Technical facts and data overrule opinions and personal preferences.
+*   Факты и данные всегда важнее мнений и персональных предпочтений.
 
-*   On matters of style, the [style guide](http://google.github.io/styleguide/)
-    is the absolute authority. Any purely style point (whitespace, etc.) that is
-    not in the style guide is a matter of personal preference. The style should
-    be consistent with what is there. If there is no previous style, accept the
-    author's.
+*   В вопросах стиля [style guide](http://google.github.io/styleguide/) является наивысшим авторитетом.
+    Все, что не отражено в style guide должно быть консистентным с другим кодом проекта. Если предыдущего кода нет, то стоит принять стиль автора.
 
-*   **Aspects of software design are almost never a pure style issue or just a
-    personal preference.** They are based on underlying principles and should be
-    weighed on those principles, not simply by personal opinion. Sometimes there
-    are a few valid options. If the author can demonstrate (either through data
-    or based on solid engineering principles) that several approaches are
-    equally valid, then the reviewer should accept the preference of the author.
-    Otherwise the choice is dictated by standard principles of software design.
+*   **Аспекты построения программ никогда не являются в чистом виде вопросами стиля написания или персональных предпочтений.**
+    Они основаны на принятых в организации/проекте правилах и должны быть построены с учетом этих принципов, а не только личного мнения. Иногда существует несколько подходов к реализации одного и того же функционала.
+    В таком случае, если автор на основе данных или общепринятых инженерных практик может показать, что подходы одинаковы, то ревьюер должен принять выбор автора. В противном случае следует руководствоваться стандартными принципами выстраивания программ.
 
-*   If no other rule applies, then the reviewer may ask the author to be
-    consistent with what is in the current codebase, as long as that doesn't
-    worsen the overall code health of the system.
+*   В ситуации, не регламентированной правилами, ревьюер может запросить от автора привести код к виду, консистентному с другим кодом проекта, если это не ухудшает общее состояние кодовой базы.
 
-## Resolving Conflicts {#conflicts}
 
-In any conflict on a code review, the first step should always be for the
-developer and reviewer to try to come to consensus, based on the contents of
-this document and the other documents in [The CL Author's Guide](../developer/)
-and this [Reviewer Guide](index.md).
+## Разрешение конфиликтов {#conflicts}
 
-When coming to consensus becomes especially difficult, it can help to have a
-face-to-face meeting or a VC between the reviewer and the author, instead of
-just trying to resolve the conflict through code review comments. (If you do
-this, though, make sure to record the results of the discussion in a comment on
-the CL, for future readers.)
+В случае возникновения конфликтных ситуаций, прежде всего, стоит постараться прийти к консенсусу, основываясь на правилах, описанных здесь: [The CL Author's Guide](../developer/) и здесь [Reviewer Guide](index.md).
 
-If that doesn't resolve the situation, the most common way to resolve it would
-be to escalate. Often the
-escalation path is to a broader team discussion, having a TL weigh in, asking
-for a decision from a maintainer of the code, or asking an Eng Manager to help
-out. **Don't let a CL sit around because the author and the reviewer can't come
-to an agreement.**
+Если прийти к согласию не удается, то ревьюеру и автору стоит назначить очную встречу или видеозвонок: это будет эффективнее войны в комментариях. В таком случае, постарайтесь зафиксировать результаты обсуждения в комментариях к CL, для будущих читателей.
 
-Next: [What to look for in a code review](looking-for.md)
+Если ситуация все равно не разрешилась, то нужно попробовать эскалировать конфликт - вы можете обсудить вопрос командой, узнать мнение первоначального автора кода, в который вносятся изменения, или спросить совета у более опытных коллег. **Не позволяйте CL "зависнуть" просто потому, что ревьюер и автор не могут прийти к согласию.**
+
+
+Далее: [За чем необходимо следить в ревью](looking-for.md)
