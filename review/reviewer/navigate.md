@@ -1,79 +1,42 @@
-# Navigating a CL in review
+# Навигация по списку изменений в ревью
 
 
 
-## Summary
+## TL;DR
 
-Now that you know [what to look for](looking-for.md), what's the most efficient
-way to manage a review that's spread across multiple files?
+Теперь, когда понятно [на что нужно обращать внимание](looking-for.md), необходимо определиться, каков порядок проведения ревью. Можно выделить 3 основных этапа:
 
-1.  Does the change make sense? Does it have a good
-    [description](../developer/cl-descriptions.md)?
-2.  Look at the most important part of the change first. Is it well-designed
-    overall?
-3.  Look at the rest of the CL in an appropriate sequence.
+1. Понять, нужен ли представленный функционал в принципе и есть ли у него хорошее [описание](../developer/cl-descriptions.md)?
+2. Обратить внимание на самое важное в измененном коде и то, насколько хорошо решение спроектировано в целом,
+3. Просмотреть оставшиеся изменения в порядке, который посчитаете нужным.
 
-## Step One: Take a broad view of the change {#step_one}
 
-Look at the [CL description](../developer/cl-descriptions.md) and what the CL
-does in general. Does this change even make sense? If this change shouldn't have
-happened in the first place, please respond immediately with an explanation of
-why the change should not be happening. When you reject a change like this, it's
-also a good idea to suggest to the developer what they should have done instead.
+## Этап 1: Обзор изменений {#step_one}
 
-For example, you might say "Looks like you put some good work into this, thanks!
-However, we're actually going in the direction of removing the FooWidget system
-that you're modifying here, and so we don't want to make any new modifications
-to it right now. How about instead you refactor our new BarWidget class?"
+Посмотрите на [описание CL](../developer/cl-descriptions.md) и его основной функционал: нужны ли эти изменения? Если предлагаемый функционал не нужен, постарайтесь сообщить об этом как можно скорее и объясните причины. При этом, желательно, предложить разработчику задачу взамен.
 
-Note that not only did the reviewer reject the current CL and provide an
-alternative suggestion, but they did it *courteously*. This kind of courtesy is
-important because we want to show that we respect each other as developers even
-when we disagree.
+Ваше сообщение может выглядеть следующим образом: "Спасибо за хороший код, однако, сейчас мы идем к тому, чтобы полностью избавиться от системы FooWidget, которая здесь затрагивается. Поэтому в данный момент мы никаким образом не модифицируем ее. Было бы здорово, если бы ты помог с рефакторингом BarWidget класса. Что думаешь?"
 
-If you get more than a few CLs that represent changes you don't want to make,
-you should consider re-working your team's development process or the posted
-process for external contributors so that there is more communication before CLs
-are written. It's better to tell people "no" before they've done a ton of work
-that now has to be thrown away or drastically re-written.
+Обратите внимание, на общий тон сообщения ревьюера: он учтиво и вежливо отклонил CL и предложил альтернативу. Подобная тактичность очень важна: так мы показываем свое уважение к другим разработчикам, даже если между нами есть разногласия.
 
-## Step Two: Examine the main parts of the CL {#step_two}
+Если такие ситуации возникают часто и вы получаете много запросов на ревью по тем изменениям, которые вы считаете не нужными в вашей системе, то подумайте над тем, как устроен процесс внесения изменений в ваш код для внешних разработчиков - возможно, вам нужно согласовывать изменения до написания кода. Лучше сказать "нет" до того, как человек проделает большую работу, которая по итогу окажется не нужной.
 
-Find the file or files that are the "main" part of this CL. Often, there is one
-file that has the largest number of logical changes, and it's the major piece of
-the CL. Look at these major parts first. This helps give context to all of the
-smaller parts of the CL, and generally accelerates doing the code review. If the
-CL is too large for you to figure out which parts are the major parts, ask the
-developer what you should look at first, or ask them to
-[split up the CL into multiple CLs](../developer/small-cls.md).
+## Этап 2: Проверка самого важного {#step_two}
 
-If you see some major design problems with this part of the CL, you should send
-those comments immediately, even if you don't have time to review the rest of
-the CL right now. In fact, reviewing the rest of the CL might be a waste of
-time, because if the design problems are significant enough, a lot of the other
-code under review is going to disappear and not matter anyway.
+Найдите самую важную часть CL - часто это один файл, в котором поменялось наибольшое количество логики. Сначала проверьте именно важные изменения - так вы получите необходимый контекст для проверки всего остального. Если CL слишком велик и вы не можете выделить главные части, спросите у самого разработчика, что здесь самое важное или же попросите его [разбить CL на несколько более мелких](../developer/small-cls.md).
 
-There are two major reasons it's so important to send these major design
-comments out immediately:
+Если вы видите фундаментальные проблемы в CL, как можно скорее оставьте комментарий об этом, даже если у вас прямо сейчас нет времени смотреть CL до конца. Возможно, с учетом обозначенных вами проблем, смотреть оставшиеся изменения и не имеет смысла - они все равно будут переписаны.
 
--   Developers often mail a CL and then immediately start new work based on that
-    CL while they wait for review. If there are major design problems in the CL
-    you're reviewing, they're also going to have to re-work their later CL. You
-    want to catch them before they've done too much extra work on top of the
-    problematic design.
--   Major design changes take longer to do than small changes. Developers nearly
-    all have deadlines; in order to make those deadlines and still have quality
-    code in the codebase, the developer needs to start on any major re-work of
-    the CL as soon as possible.
+Почему важно сообщать о больших проблемах рано:
 
-## Step Three: Look through the rest of the CL in an appropriate sequence {#step_three}
+-   Часто разработчики отправляют CL на ревью и дальше сразу начинают работу основанную на только что написанном коде. Чем раньше вы скажете об обнаруженных важных проблемах, тем меньше работы придется переделывать разработчику.
 
-Once you've confirmed there are no major design problems with the CL as a whole,
-try to figure out a logical sequence to look through the files while also making
-sure you don't miss reviewing any file. Usually after you've looked through the
-major files, it's simplest to just go through each file in the order that
-the code review tool presents them to you. Sometimes it's also helpful to read the tests
-first before you read the main code, because then you have an idea of what the
-change is supposed to be doing.
+-   Серьезные проблемы сложнее и дольше исправлять. Практически у всех разработчиков есть дедлайны и, если мы хотим иметь кодовую базу хорошего качества и при этом укладываться в сроки, то большие проблемы лучше исправлять как можно скорее, когда до дедлайна еще далеко.
 
-Next: [Speed of Code Reviews](speed.md)
+
+## Этап 3: Проверка всего остального {#step_three}
+
+Когда вы поняли что никаких серьезных проблем в CL нет, необходимо проверить остальной код. Выберите порядок просмотра сами или просто примите предложенный вашим инструментом проведения ревью. Иногда бывает полезным сначала посмотреть тесты, чтобы понять что должен делать код. Главное - убедиться что вы проверили каждый файл.
+
+
+Далее: [Скорость проведения ревью](speed.md)
