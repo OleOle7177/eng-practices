@@ -6,7 +6,7 @@
 -   [За чем необходимо следить в ревью](looking-for.md)
 -   [Навигация в по списку изменений в ревью](navigate.md)
 -   [Скорость проведения ревью](speed.md)
--   [Как писать хорошие комментарии в ревью](comments.md)
+-   [Как писать комментарии в ревью](comments.md)
 -   [Дискуссии в ходе ревью](pushback.md)
 
 See also the [CL Author's Guide](../developer/), which gives detailed guidance
