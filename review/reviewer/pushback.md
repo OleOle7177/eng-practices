@@ -1,83 +1,40 @@
-# Handling pushback in code reviews
+# Дискуссии в процессе ревью
+
+Иногда разработчики не будут принимать ваши замечания по ревью, просто не соглашаясь или жалуясь на вашу излишнюю строгость.
 
 
+## Кто прав? {#who_is_right}
 
-Sometimes a developer will push back on a code review. Either they will disagree
-with your suggestion or they will complain that you are being too strict in
-general.
+Когда разработчик не соглашается с вашим комментарием по его коду, для начала проверьте еще раз - возможно, он прав. Очень часто разработчик ближе к коду, чем вы и некоторые детали ему известны лучше. Насколько весомы его аргументы? Насколько они значимы с точки зрения развития кодовой базы в дальнейшем? Если разработчик прав, дайте ему об этом знать и закройте вопрос
 
-## Who is right? {#who_is_right}
+Однако, автор кода не всегда бывает прав. В таком случае ревьюер должен пояснить подробнее, почему он считает свое замечание существенным. Хороший ответ демонстрирует понимание позиции разработчика и дополнительную информацию о том, почему этот комментарий все-таки имеет место.
 
-When a developer disagrees with your suggestion, first take a moment to consider
-if they are correct. Often, they are closer to the code than you are, and so
-they might really have a better insight about certain aspects of it. Does their
-argument make sense? Does it make sense from a code health perspective? If so,
-let them know that they are right and let the issue drop.
+В случае, когда ревьюер считает, что его предложение улучшит состояние кодовой базы и затрачиваемые усилия будут оправданы, он должен последовательно настаивать на изменениях. **Улучшение кодовой базы обычно происходит маленькими шагами**.
 
-However, developers are not always right. In this case the reviewer should
-further explain why they believe that their suggestion is correct. A good
-explanation demonstrates both an understanding of the developer's reply, and
-additional information about why the change is being requested.
+Иногда требуется несколько раундов переговоров, чтобы убедить разработчика. Всегда помните, что вы должны оставаться [вежливым](comments.md#courtesy). Дайте разработчику понять что *понимаете* его аргументы, но просто *не согласны* с ними.
 
-In particular, when the reviewer believes their suggestion will improve code
-health, they should continue to advocate for the change, if they believe the
-resulting code quality improvement justifies the additional work requested.
-**Improving code health tends to happen in small steps.**
 
-Sometimes it takes a few rounds of explaining a suggestion before it really
-sinks in. Just make sure to always stay [polite](comments.md#courtesy) and let
-the developer know that you *hear* what they're saying, you just don't *agree*.
+## Расстраиваются ли разработчики {#upsetting_developers}
 
-## Upsetting Developers {#upsetting_developers}
+Иногда ревьюеры считают, что разработчик может расстроиться или обидиться, если продолжать настаивать на изменениях. Иногда это действительно случается, но, обычно это временно и в последствии, разработчик, как правило, благодарен что вы сумели улучшить предложенный им код. Обычно же, если вы [вежливы](comments.md#courtesy) в своих комментариях, то разработчики не расстраиваются вовсе, а все обиды надуманы ревьюером. Весь негатив обычно больше про то, [как](comments.md#courtesy) пишутся комментарии, а не про сам факт запроса изменений.
 
-Reviewers sometimes believe that the developer will be upset if the reviewer
-insists on an improvement. Sometimes developers do become upset, but it is
-usually brief and they become very thankful later that you helped them improve
-the quality of their code. Usually, if you are [polite](comments.md#courtesy) in
-your comments, developers actually don't become upset at all, and the worry is
-just in the reviewer's mind. Upsets are usually more about
-[the way comments are written](comments.md#courtesy) than about the reviewer's
-insistence on code quality.
 
-## Cleaning It Up Later {#later}
+## "Сделаю позже" {#later}
 
-A common source of push back is that developers (understandably) want to get
-things done. They don't want to go through another round of review just to get
-this CL in. So they say they will clean something up in a later CL, and thus you
-should LGTM *this* CL now. Some developers are very good about this, and will
-immediately write a follow-up CL that fixes the issue. However, experience shows
-that as more time passes after a developer writes the original CL, the less
-likely this clean up is to happen. In fact, usually unless the developer does
-the clean up *immediately* after the present CL, it never happens. This isn't
-because developers are irresponsible, but because they have a lot of work to do
-and the cleanup gets lost or forgotten in the press of other work. Thus, it is
-usually best to insist that the developer clean up their CL *now*, before the
-code is in the codebase and "done." Letting people "clean things up later" is a
-common way for codebases to degenerate.
+Разработчики хотят чтобы дела были сделаны (что резонно) и, часто не хотят проходить еще один раунд ревью. Поэтому, типичные ответы на ваши комментарии будут связаны с обещаниями поправить что-то в следующем CL, и пожеланием к вам одобрить изменения сейчас. Некоторые разработчики добросовестно держат слово и оперативно делают новый CL со всеми исправлениями. Однако, как показывает практика, чем больше времени проходит с момента создания CL, тем меньше шансов что дополнительные фиксы когда-либо будут сделаны. И здесь дело не в лени или безответственности, просто у разработчиков очень много работы и они могли забыть о о своем обещании. Обычно, лучший способ добиться изменений - это сделать их сразу, перед тем, как код будет влит в общую кодовую базу, и задача перейдет в статус "сделано". Позволяя отложить исправления на позже вы серьезно ухудшаете состояние кодовой базы проекта.
 
-If a CL introduces new complexity, it must be cleaned up before submission
-unless it is an [emergency](../emergencies.md). If the CL exposes surrounding
-problems and they can't be addressed right now, the developer should file a bug
-for the cleanup and assign it to themselves so that it doesn't get lost. They
-can optionally also write a TODO comment in the code that references the filed
-bug.
+Если CL привносит в код необязательную сложность, то CL должен быть исправлен, только если дело не касается [экстренных случаев](../emergencies.md). Если по ходу работы над CL были обнаружены дополнительные проблемы, которые не могут быть решены сейчас, то разработчик должен завести себе баг на исправление и, опционально, добавить TODO-комментарий в код со ссылкой на баг.
 
-## General Complaints About Strictness {#strictness}
 
-If you previously had fairly lax code reviews and you switch to having strict
-reviews, some developers will complain very loudly. Improving the
-[speed](speed.md) of your code reviews usually causes these complaints to fade
-away.
+## Жалобы на строгость ревью {#strictness}
 
-Sometimes it can take months for these complaints to fade away, but eventually
-developers tend to see the value of strict code reviews as they see what great
-code they help generate. Sometimes the loudest protesters even become your
-strongest supporters once something happens that causes them to really see the
-value you're adding by being strict.
+Если ранее ваши ревью были слабыми, а теперь вы стали более требовательны, некоторые разработчики будут сильно возмущены. Достаточная [скорость проведения ревью](speed.md) обычно сводит подобные жалобы на нет.
 
-## Resolving Conflicts {#conflicts}
+Иногда требуются месяцы чтобы все нелоразумения исчезли полностью, но в общем случае, разработчики начинают понимать значимость строгих ревью когда видят, как их код становится лучше.
 
-If you are following all of the above but you still encounter a conflict between
-yourself and a developer that can't be resolved, see
-[The Standard of Code Review](standard.md) for guidelines and principles that
-can help resolve the conflict.
+Даже самые ярые противники строгих ревью могут стать вашими самыми большими союзниками, когда они на практике встретятся с ситуацией, доказывающей, что ваша жесткая позиция в ревью была правильной.
+
+
+## Разрешение конфликтов {#conflicts}
+
+Если вы следуете всем вышеуказанным правилам, но все равно случаются конфликты с разработчиками и вы не можете их решить, обратитесь к [Стандартам код-ревью](standard.md) для понимания практик и стандартов, которые могут помочь вам решить конфликт.

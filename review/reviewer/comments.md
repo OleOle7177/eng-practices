@@ -1,70 +1,40 @@
-# How to write code review comments
+# Как писать комментарии в ревью
+
+## TL;DR
+
+-   Будьте добрыми.
+-   Объясняйте свои доводы.
+-   Находите баланс между тем, чтобы давать прямые указания и просто обозначать проблемы и позволять разработчику решить их самостоятельно.
+-   Мотивируйте разработчиков писать простой код и добавлять комментарии, вместо объяснения сложных участков конкретно вам.
 
 
+## Вежливость
 
-## Summary
+Ваши комментарии должны быть вежливыми, тактичными и, вместе с тем, полезными и понятными для разработчика, чей код вы ревьюите. Один из способов добиться этого - проверять что вы пишите комментарии именно про код, а не про его автора. Вы не всегда должны слепо следовать этой инструкции, однако, определенно стоит ей пользоваться, если вы хотите написать что-то, что может обидеть человека или выглядеть как придирка. Например:
 
--   Be kind.
--   Explain your reasoning.
--   Balance giving explicit directions with just pointing out problems and
-    letting the developer decide.
--   Encourage developers to simplify code or add code comments instead of just
-    explaining the complexity to you.
+Плохо: "Почему **ты** решил использовать потоки, при том что многопоточность не дает здесь никакого выигрыша?"
 
-## Courtesy
+Хорошо: "В данном случае, многопоточность не приносит никакой выгоды, а только усложняет систему. Поскольку, нет никакого выигрыша в производительности, лучше чтобы данный код работал в одном потоке."
 
-In general, it is important to be
-courteous and respectful while also being
-very clear and helpful to the developer whose code you are reviewing. One way to
-do this is to be sure that you are always making comments about the *code* and
-never making comments about the *developer*. You don't always have to follow
-this practice, but you should definitely use it when saying something that might
-otherwise be upsetting or contentious. For example:
 
-Bad: "Why did **you** use threads here when there's obviously no benefit to be
-gained from concurrency?"
+## Объясняйте причины {#why}
 
-Good: "The concurrency model here is adding complexity to the system without any
-actual performance benefit that I can see. Because there's no performance
-benefit, it's best for this code to be single-threaded instead of using multiple
-threads."
+Выше в примере "Хорошо" есть объяснение, почему вы оставляете данный комментарий. Вам не всегда нужно так делать, но иногда стоит давать чуть больше информации - давайте ссылку на хорошую практику, которую вы имеете ввиду или поясните как ваше предложение улучшит кодовую базу.
 
-## Explain Why {#why}
 
-One thing you'll notice about the "good" example from above is that it helps the
-developer understand *why* you are making your comment. You don't always need to
-include this information in your review comments, but sometimes it's appropriate
-to give a bit more explanation around your intent, the best practice you're
-following, or how your suggestion improves code health.
+## Давайте советы {#guidance}
 
-## Giving Guidance {#guidance}
+**В обязанности ревьюера не входит внесение правок в CL, это обязанность разработчика**. Вам необязательно приводить детальное решение в комментариях и писать код за разработчика.
 
-**In general it is the developer's responsibility to fix a CL, not the
-reviewer's.** You are not required to do detailed design of a solution or write
-code for the developer.
+Это не означает что ревьюер не должен помогать. В целом, вы должны находить приемлемый баланс между простым указанием на проблему и тем, чтобы написать прямые инструкции как эту проблему исправить. С одной стороны, разработчик быстрее научится, если будет самостоятельно принимать решения и, кроме того, он ближе к коду, чем ревьюер, а значит, как правило, может предложить лучшее решение.
 
-This doesn't mean the reviewer should be unhelpful, though. In general you
-should strike an appropriate balance between pointing out problems and providing
-direct guidance. Pointing out problems and letting the developer make a decision
-often helps the developer learn, and makes it easier to do code reviews. It also
-can result in a better solution, because the developer is closer to the code
-than the reviewer is.
+С другой стороны, иногда бывает полезнее дать именно прямые инструкции. Стоит помнить, что главной целью ревью является доведение CL до достаточно хорошего состояния, прогресс разработчика - вторичная цель, хоть и также важная.
 
-However, sometimes direct instructions, suggestions, or even code are more
-helpful. The primary goal of code review is to get the best CL possible. A
-secondary goal is improving the skills of developers so that they require less
-and less review over time.
 
-## Accepting Explanations {#explanations}
+## Следите за объяснениями {#explanations}
 
-If you ask a developer to explain a piece of code that you don't understand,
-that should usually result in them **rewriting the code more clearly**.
-Occasionally, adding a comment in the code is also an appropriate response, as
-long as it's not just explaining overly complex code.
+Если вы просите разработчика объяснить некоторую непонятную вам часть кода, то, чаще всего, это означает что **код должен быть переписан в более простом виде**. Иногда и добавление комментария будет правильной реакцией на такой запрос, но помните, что комментарий не должен просто пояснять почему код такой сложный, в данном случае, он должен объяснять смысл самого кода.
 
-**Explanations written only in the code review tool are not helpful to future
-code readers.** They are acceptable only in a few circumstances, such as when
-you are reviewing an area you are not very familiar with and the developer
-explains something that normal readers of the code would have already known.
+Пояснения, написанные только в инструменте проведения ревью, являются бесполезными для будущих читателей. Они приемлемы лишь в некоторых ситуациях: например, когда вы не очень знакомы с областью кода, который был изменен, а другие, обычные читатели данного кода, ее хорошо знают.
 
-Next: [Handling Pushback in Code Reviews](pushback.md)
+Далее: [Дискуссии в процессе ревью](pushback.md)
